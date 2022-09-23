@@ -5,8 +5,6 @@ import {
   Routes,
   Route,
   Link,
-  Navigate,
-  useParams,
   useNavigate,
   useMatch
 } from "react-router-dom"
@@ -70,16 +68,22 @@ const CreateNew = (props) => {
       info: info.value,
       votes: 0
     })
+
     navigate('/')
     props.setNotification(`a new anecdote ${content.value} created!`)
     setTimeout(() => props.setNotification(''), 5000)
   }
 
   const clearInput = () => {
-    content.clear()
-    author.clear()
-    info.clear()
+    [content, author, info].map(el => el.clear())
   }
+  
+  const parseForInput = (a) => {
+    const {clear, ...rest} = a
+    return rest
+  }
+
+  const [inputContent, inputAuthor, inputInfo] = [content, author, info].map(el => parseForInput(el))
 
   return (
     <div>
@@ -87,15 +91,15 @@ const CreateNew = (props) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input {...content} />
+          <input {...inputContent} />
         </div>
         <div>
           author
-          <input {...author} />
+          <input {...inputAuthor} />
         </div>
         <div>
           url for more info
-          <input {...info} />
+          <input {...inputInfo} />
         </div>
         <button>create</button>
         <button type='button' onClick={clearInput}>reset</button>
