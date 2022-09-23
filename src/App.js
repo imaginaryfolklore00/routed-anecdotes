@@ -75,6 +75,12 @@ const CreateNew = (props) => {
     setTimeout(() => props.setNotification(''), 5000)
   }
 
+  const clearInput = () => {
+    content.clear()
+    author.clear()
+    info.clear()
+  }
+
   return (
     <div>
       <h2>create a new anecdote</h2>
@@ -92,6 +98,7 @@ const CreateNew = (props) => {
           <input {...info} />
         </div>
         <button>create</button>
+        <button type='button' onClick={clearInput}>reset</button>
       </form>
     </div>
   )
